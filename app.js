@@ -18,3 +18,52 @@ connection.connect(function (err) {
   console.log("connected as id " + connection.threadId);
   
 });
+
+function start(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "choice",
+            message: "Where would you like to start?",
+            choices: [
+                "View departments",
+                "View employee roles",
+                "View all employees",
+                "Update employee roles",
+                "Add department",
+                "Add role",
+                "Add employee"
+            ]
+        }
+    ]).then(function(val) {
+        switch (val.choice) {
+            case "View departments":
+              
+            break;
+    
+          case "View employee roles":
+              
+            break;
+          case "View all employees":
+            
+            break;
+          
+          case "Update employee roles":
+               
+              break;
+
+          case "Add department":
+              
+              break;
+      
+            case "Add role":
+              
+              break;
+      
+            case "Add employee":
+              
+              break;
+    
+            }
+    })
+}
