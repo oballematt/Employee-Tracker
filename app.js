@@ -6,7 +6,7 @@ const connection = mysql.createConnection({
   host: "localhost",
   port: 3306,
   user: "root",
-  password: "",
+  password: "Ilovemerrbear1",
   database: "employee_db"
 });
 
@@ -46,7 +46,7 @@ function start(){
                 viewRoles()
             break;
           case "View all employees":
-            
+                viewEmployees()
             break;
           
           case "Update employee roles":
@@ -79,10 +79,19 @@ function viewDepartments(){
 }
 
 function viewRoles(){
-    connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id",
+    connection.query("SELECT * FROM role",
     function(err, res){
         if (err) throw err
         console.table(res)
         start()
+    })
+}
+
+function viewEmployees(){
+    connection.query("SELECT employee.first_name, employee.last_name, role.title AS Title FROM employee JOIN role ON employee.role_id = role.id", 
+    function(err, res) {
+      if (err) throw err
+      console.table(res)
+      start()
     })
 }
