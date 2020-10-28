@@ -193,3 +193,16 @@ function addEmployee(){
     })
 }
 
+function role(){
+    const role = []
+    connection.query("SELECT * FROM role", function(err, res) {
+        if (err) throw err
+        for (var i = 0; i < res.length; i++) {
+          role.push(res[i].title);
+        }
+    
+      })
+      return role;
+}
+
+
