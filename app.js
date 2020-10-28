@@ -171,7 +171,7 @@ function addEmployee(){
         {
             name: "employeeManager",
             type: "input",
-            message: "What is the id of the employee's manager?",
+            message: "What is the id of the employee's manager? Enter value of 0 if adding a new manager",
            
         }
     ]).then(function (res){
