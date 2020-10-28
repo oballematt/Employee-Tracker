@@ -50,7 +50,7 @@ function start() {
                 break;
 
             case "Update employee roles":
-
+                updateEmployee()
                 break;
 
             case "Add department":
@@ -150,7 +150,7 @@ function addRole() {
         )
     })
 }
-function addEmployee(){
+function addEmployee() {
     inquirer.prompt([
         {
             name: "newFirst",
@@ -166,16 +166,16 @@ function addEmployee(){
             name: "newId",
             type: "input",
             message: "What is the new employees Id?",
-            
+
         },
         {
             name: "employeeManager",
             type: "input",
             message: "What is the id of the employee's manager? Enter value of 0 if adding a new manager",
-           
+
         }
-    ]).then(function (res){
-            connection.query("INSERT INTO employee SET ?",
+    ]).then(function (res) {
+        connection.query("INSERT INTO employee SET ?",
             {
                 first_name: res.newFirst,
                 last_name: res.newLast,
@@ -188,21 +188,66 @@ function addEmployee(){
                 console.table(res)
                 start()
             }
-            )
-        
+        )
+
     })
 }
 
-function role(){
+function updateEmployee() {
+    connection.query("SELECT employee.first_name, role.title FROM employee JOIN role ON employee.role_id = role.id;", function (err, res) {
+        if (err) throw err
+        console.log(res)
+        inquirer.prompt([
+            {
+                name: "firstname",
+                type: "list",
+                message: "What is the name of the employee you would like to change?",
+                choices: function () {
+                    const firstname = [];
+                    for (let i = 0; i < res.length; i++) {
+                        firstname.push(res[i].first_name)
+                    }
+                    return firstname
+                }
+            },
+            {
+                name: "newRole",
+                type: "list",
+                message: "What would you like to change this employees title to?",
+                choices: role()
+            }
+        ]).then(function (res) {
+            const employeeRole = role().indexOf(res.newRole) + 1
+            connection.query("UPDATE employee SET WHERE ?",
+                {
+                    first_name: res.firstname,
+                    role_id: employeeRole
+
+                },
+
+                function (err) {
+                    if (err) throw err
+                    console.table(res)
+                    start()
+                })
+
+        })
+    })
+}
+
+function role() {
     const role = []
-    connection.query("SELECT * FROM role", function(err, res) {
+    connection.query("SELECT * FROM role", function (err, res) {
         if (err) throw err
         for (var i = 0; i < res.length; i++) {
-          role.push(res[i].title);
+            role.push(res[i].title);
         }
-    
-      })
-      return role;
+
+    })
+    return role;
 }
+
+
+
 
 
